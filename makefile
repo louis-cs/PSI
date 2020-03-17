@@ -1,3 +1,4 @@
 all:
 	lex source.l
-	gcc lex.yy.c -o analyseur_lexical
+	yacc -d source.y
+	gcc lex.yy.c y.tab.c -ly -ll
