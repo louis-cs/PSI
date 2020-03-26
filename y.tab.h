@@ -54,14 +54,16 @@ extern int yydebug;
     tSC = 264,
     tMAIN = 265,
     tINT = 266,
-    tVAR = 267,
-    tPLUS = 268,
-    tMINUS = 269,
-    tDIV = 270,
-    tEQUAL = 271,
-    tMULT = 272,
-    tPRINT = 273,
-    tVAL = 274
+    tPLUS = 267,
+    tMINUS = 268,
+    tDIV = 269,
+    tEQUAL = 270,
+    tMULT = 271,
+    tPRINT = 272,
+    tIF = 273,
+    tELSE = 274,
+    tVAL = 275,
+    tVAR = 276
   };
 #endif
 /* Tokens.  */
@@ -74,26 +76,28 @@ extern int yydebug;
 #define tSC 264
 #define tMAIN 265
 #define tINT 266
-#define tVAR 267
-#define tPLUS 268
-#define tMINUS 269
-#define tDIV 270
-#define tEQUAL 271
-#define tMULT 272
-#define tPRINT 273
-#define tVAL 274
+#define tPLUS 267
+#define tMINUS 268
+#define tDIV 269
+#define tEQUAL 270
+#define tMULT 271
+#define tPRINT 272
+#define tIF 273
+#define tELSE 274
+#define tVAL 275
+#define tVAR 276
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 29 "source.y" /* yacc.c:1909  */
+#line 31 "source.y" /* yacc.c:1909  */
 
     int intValue;
     char * stringValue;
 
-#line 97 "y.tab.h" /* yacc.c:1909  */
+#line 101 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

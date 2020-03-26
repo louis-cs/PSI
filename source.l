@@ -9,12 +9,14 @@ Exp         e{Sign}{Digit}+
 %%
 
 "main"              {printf("main"); return tMAIN;}
+"if"                {printf("if "); return tIF;}
+"else"              {printf("else "); return tELSE;}
+"while"             {printf("while "); return tELSE;}
 "printf"			{printf("printf"); return tPRINT;}
 "const"				{printf("const"); return tCONST;}
 
 "int"               {printf("int"); return tINT;}
 
-[ \t\n]+            {printf(" ");}
 "{"                 {printf("OB\n"); return tOB;}
 "}"                 {printf("CB\n"); return tCB;}
 "("					{printf("OP"); return tOP;}
@@ -38,4 +40,6 @@ Exp         e{Sign}{Digit}+
 						yylval.stringValue = yytext;
 						return tVAR;
 					}
+                    
+[ \t\n]+            {printf(" ");}
 %%

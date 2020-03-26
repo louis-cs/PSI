@@ -2,6 +2,10 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include <math.h>
+    #include "symboltable.h"
+
+    #define true 1
+    #define false 0
 
     int yywrap();
     int yylex();
@@ -18,18 +22,21 @@
     } 
 
     int main(void){
+        init();
         yyparse();
     }
 %}
-
-%token tC tCONST tOP tCP tOB tCB tSC tMAIN tINT tVAR tPLUS tMINUS tDIV tEQUAL tMULT tPRINT
-%token <intValue> tVAL
 
 %union 
 {
     int intValue;
     char * stringValue;
 }
+
+%token tC tCONST tOP tCP tOB tCB tSC tMAIN tINT tPLUS tMINUS tDIV tEQUAL tMULT tPRINT tIF tELSE
+%token <intValue> tVAL
+%token <stringValue> tVAR
+
 
 %type<intValue> expression
 
@@ -42,24 +49,46 @@
 
 input: MainStart;
 
-MainStart: tMAIN tOP params tCP tOB lines tCB;
+MainStart: tMAIN tOP tCP tOB instructions tCB;
 
-params      : param tC params 
-            | param;
+instructions: instruction tSC instructions 
+            | instruction tSC;
 
-param       : tINT tVAR;
+instruction: define 
+            | expression;
 
-lines       : line tSC lines 
-            | line;
-
-line        : expression;
-
-expression  : tVAL {$$=$1 ;}
+expression: tVAL {$$=$1 ;}
             | expression tPLUS expression {$$=$1+$3 ;}
             | expression tMINUS expression {$$=$1-$3 ;}
             | expression tMULT expression {$$=$1*$3 ;}
             | expression tDIV expression {$$=$1/$3 ;};
 
+define: tINT defineInts
+        | tCONST defineConsts;
+
+defineConsts: defineConst tC defineConsts
+            | defineConst;
+
+defineInts: defineInt tC defineInts
+            | defineInt;
+
+defineConst: tVAR tEQUAL tVAL {
+                    char* name = $1;
+                    addSymbol(name, true, true);
+                }
+            | tVAR {
+                    char* name = $1;
+                    addSymbol(name, true, false);
+            };
+
+defineInt: tVAR {
+                    char* name = $1;
+                    addSymbol(name, false, false);
+                }
+            | tVAR tEQUAL tVAL {
+                    char* name = $1;
+                    addSymbol(name, false, true);
+                };
 
 %%
    
