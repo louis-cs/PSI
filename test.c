@@ -1,4 +1,5 @@
-main() { int a, b = 3, c;
+main() { 
+    int a, b = 3, c;
     const x = 5, y = 10;
 
     a = 2;
@@ -6,7 +7,7 @@ main() { int a, b = 3, c;
 
     printf(a);
 
-    c = (a+b)*y;
+    c = a+b*c;
 
     printf(c);
 }

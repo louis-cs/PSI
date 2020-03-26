@@ -54,14 +54,15 @@ MainStart: tMAIN tOP tCP tOB instructions tCB;
 instructions: instruction tSC instructions 
             | instruction tSC;
 
-instruction: define 
-            | expression;
+instruction: define | expression | print | assignVar;
 
-expression: tVAL {$$=$1 ;}
-            | expression tPLUS expression {$$=$1+$3 ;}
-            | expression tMINUS expression {$$=$1-$3 ;}
-            | expression tMULT expression {$$=$1*$3 ;}
-            | expression tDIV expression {$$=$1/$3 ;};
+expression: tVAL
+            | tVAR
+            | tOP expression tCP
+            | expression tPLUS expression
+            | expression tMINUS expression
+            | expression tMULT expression
+            | expression tDIV expression;
 
 define: tINT defineInts
         | tCONST defineConsts;
@@ -89,6 +90,10 @@ defineInt: tVAR {
                     char* name = $1;
                     addSymbol(name, false, true);
                 };
+
+assignVar: tVAR tEQUAL expression;
+
+print: tPRINT tOP tVAR tCP;
 
 %%
    

@@ -22,7 +22,7 @@ Exp         e{Sign}{Digit}+
 "("					{printf("OP"); return tOP;}
 ")"					{printf("CP"); return tCP;}
 ","                 {printf(","); return tC;}
-";"                 {printf(";"); return tSC;}
+";"                 {printf(";\n"); return tSC;}
 "="					{printf("="); return tEQUAL;}
 "+"					{printf("+"); return tPLUS;}
 "-"					{printf("-"); return tMINUS;}

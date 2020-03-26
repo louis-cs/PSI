@@ -827,7 +827,7 @@ YY_RULE_SETUP
 case 13:
 YY_RULE_SETUP
 #line 25 "source.l"
-{printf(";"); return tSC;}
+{printf(";\n"); return tSC;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
