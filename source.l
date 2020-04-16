@@ -1,6 +1,14 @@
 %{
-    #include <stdio.h>
-    #include "y.tab.h"
+	#include <stdio.h>
+	#include <stdlib.h>
+	#include "y.tab.h"
+
+	const int DEBUG = 0;
+
+	void debug(char * s) {
+		if(DEBUG)
+			printf("%s", s);
+	}
 %}
 
 Var         ([a-zA-Z][a-zA-Z0-9_]*)
@@ -8,38 +16,41 @@ Exp         e{Sign}{Digit}+
 
 %%
 
-"main"              {printf("main"); return tMAIN;}
-"if"                {printf("if "); return tIF;}
-"else"              {printf("else "); return tELSE;}
-"while"             {printf("while "); return tELSE;}
-"printf"			{printf("printf"); return tPRINT;}
-"const"				{printf("const"); return tCONST;}
+"main"              {debug("main"); return tMAIN;}
+"if"                {debug("if "); return tIF;}
+"else"              {debug("else "); return tELSE;}
+"while"             {debug("while "); return tWHILE;}
+"printf"			{debug("printf "); return tPRINT;}
+"const"				{debug("const"); return tCONST;}
 
-"int"               {printf("int"); return tINT;}
+"int"               {debug("int"); return tINT;}
 
-"{"                 {printf("OB\n"); return tOB;}
-"}"                 {printf("CB\n"); return tCB;}
-"("					{printf("OP"); return tOP;}
-")"					{printf("CP"); return tCP;}
-","                 {printf(","); return tC;}
-";"                 {printf(";\n"); return tSC;}
-"="					{printf("="); return tEQUAL;}
-"+"					{printf("+"); return tPLUS;}
-"-"					{printf("-"); return tMINUS;}
-"/"					{printf("/"); return tDIV;}
-"*"					{printf("*"); return tMULT;}
+"{"                 {debug("OB\n"); return tOB;}
+"}"                 {debug("CB\n"); return tCB;}
+"("					{debug("OP"); return tOP;}
+")"					{debug("CP"); return tCP;}
+","                 {debug("tC"); return tC;}
+";"                 {debug(";\n"); return tSC;}
+"="					{debug("="); return tEQUAL;}
+"+"					{debug("+"); return tPLUS;}
+"-"					{debug("-"); return tMINUS;}
+"/"					{debug("/"); return tDIV;}
+"*"					{debug("*"); return tMULT;}
+"<"					{debug("<"); return tLT;}
+">"                 {debug(">"); return tGT;}
+"=="				{debug("=="); return tCOMP;}
 
 [0-9]+              {
-                        printf("number");
-                        yylval.intValue = atoi(yytext);
-                        return tVAL;
-                    }
+						debug("number");
+						yylval.intValue = atoi(yytext);
+						return tVAL;
+					}
 
 {Var}               {
-						printf("var");
-						yylval.stringValue = yytext;
+						debug("var");
+						yylval.stringValue = strdup(yytext);
 						return tVAR;
 					}
-                    
-[ \t\n]+            {printf(" ");}
+					
+[ \t\n]+            {debug(" ");}
 %%

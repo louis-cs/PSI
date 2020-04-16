@@ -3,6 +3,7 @@
     #include <stdlib.h>
     #include <math.h>
     #include "symboltable.h"
+    #include "asm.h"
 
     #define true 1
     #define false 0
@@ -22,8 +23,10 @@
     } 
 
     int main(void){
-        init();
+        init_symboltable();
+        init_asm();
         yyparse();
+        printASM();
     }
 %}
 
@@ -33,12 +36,11 @@
     char * stringValue;
 }
 
-%token tC tCONST tOP tCP tOB tCB tSC tMAIN tINT tPLUS tMINUS tDIV tEQUAL tMULT tPRINT tIF tELSE
-%token <intValue> tVAL
+%token tC tCONST tOP tCP tOB tCB tSC tMAIN tINT tPLUS tMINUS tDIV tEQUAL tMULT tPRINT tLT tGT tWHILE tCOMP
+%token <intValue> tVAL tIF tELSE
 %token <stringValue> tVAR
 
-
-%type<intValue> expression
+%type<intValue> expression if1
 
 %left tPLUS tMINUS
 %left tDIV tMULT
@@ -49,20 +51,28 @@
 
 input: MainStart;
 
-MainStart: tMAIN tOP tCP tOB instructions tCB;
+MainStart: tMAIN tOP tCP OB instructions CB;
 
-instructions: instruction tSC instructions 
-            | instruction tSC;
+OB: tOB { incrementDepth(); };
+CB: tCB { decrementDepth(); };
 
-instruction: define | expression | print | assignVar;
+instructions: instruction instructions 
+            | instruction;
 
-expression: tVAL
-            | tVAR
-            | tOP expression tCP
-            | expression tPLUS expression
-            | expression tMINUS expression
-            | expression tMULT expression
-            | expression tDIV expression;
+instruction: define tSC| print tSC| assignVar tSC| if | while | tSC;
+
+defineConst: tVAR tEQUAL expression {
+                    addSymbol($1, true, true);
+                    affectation($1);
+                };
+
+defineInt: tVAR {
+                    addSymbol($1, false, false);
+                }
+            | tVAR tEQUAL expression {
+                    addSymbol($1, false, true);
+                    affectation($1);
+                };
 
 define: tINT defineInts
         | tCONST defineConsts;
@@ -73,27 +83,31 @@ defineConsts: defineConst tC defineConsts
 defineInts: defineInt tC defineInts
             | defineInt;
 
-defineConst: tVAR tEQUAL tVAL {
-                    char* name = $1;
-                    addSymbol(name, true, true);
-                }
-            | tVAR {
-                    char* name = $1;
-                    addSymbol(name, true, false);
-            };
+assignVar: tVAR tEQUAL expression {
+				char* name = $1;
+                affectation(name);
+			};
 
-defineInt: tVAR {
-                    char* name = $1;
-                    addSymbol(name, false, false);
-                }
-            | tVAR tEQUAL tVAL {
-                    char* name = $1;
-                    addSymbol(name, false, true);
-                };
+expression: tVAL {tmp_tval($1);}
+            | tVAR {tmp_tvar($1);}
+            | tOP expression tCP {$$ = $2;}
+            | expression tPLUS expression {temp_expr(PLUS);}
+            | expression tMINUS expression {temp_expr(MINUS);}
+            | expression tMULT expression {temp_expr(MULT);}
+            | expression tDIV expression {temp_expr(DIV);}
+			| expression tLT expression {temp_expr(LT);}
+			| expression tGT expression {temp_expr(GT);}
+			| expression tCOMP expression {temp_expr(COMP);}
+            ;
 
-assignVar: tVAR tEQUAL expression;
+print: tPRINT tOP tVAR tCP {print($3);};
 
-print: tPRINT tOP tVAR tCP;
+if: if1 {modify_asm_jmf_at_line($1, get_next_line());}
+    | if1 tELSE {$2 = asm_add("JMP",-1,-1,-1); modify_asm_jmf_at_line($1, get_next_line());} OB instructions CB {modify_asm_jm_at_line($2, get_next_line());};
+
+if1: tIF tOP expression tCP {$1 = asm_add("JMF", index_temp--, -1, -1);} OB instructions CB {$$ = $1;};
+
+while: tWHILE tOP expression tCP OB instructions CB;
 
 %%
    

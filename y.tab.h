@@ -60,10 +60,14 @@ extern int yydebug;
     tEQUAL = 270,
     tMULT = 271,
     tPRINT = 272,
-    tIF = 273,
-    tELSE = 274,
-    tVAL = 275,
-    tVAR = 276
+    tLT = 273,
+    tGT = 274,
+    tWHILE = 275,
+    tCOMP = 276,
+    tVAL = 277,
+    tIF = 278,
+    tELSE = 279,
+    tVAR = 280
   };
 #endif
 /* Tokens.  */
@@ -82,22 +86,26 @@ extern int yydebug;
 #define tEQUAL 270
 #define tMULT 271
 #define tPRINT 272
-#define tIF 273
-#define tELSE 274
-#define tVAL 275
-#define tVAR 276
+#define tLT 273
+#define tGT 274
+#define tWHILE 275
+#define tCOMP 276
+#define tVAL 277
+#define tIF 278
+#define tELSE 279
+#define tVAR 280
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 31 "source.y" /* yacc.c:1909  */
+#line 34 "source.y" /* yacc.c:1909  */
 
     int intValue;
     char * stringValue;
 
-#line 101 "y.tab.h" /* yacc.c:1909  */
+#line 109 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
