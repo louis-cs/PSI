@@ -36,8 +36,8 @@
     char * stringValue;
 }
 
-%token tC tCONST tOP tCP tOB tCB tSC tMAIN tINT tPLUS tMINUS tDIV tEQUAL tMULT tPRINT tLT tGT tWHILE tCOMP
-%token <intValue> tVAL tIF tELSE
+%token tC tCONST tOP tCP tOB tCB tSC tMAIN tINT tPLUS tMINUS tDIV tEQUAL tMULT tPRINT tLT tGT tCOMP
+%token <intValue> tVAL tIF tELSE tWHILE
 %token <stringValue> tVAR
 
 %type<intValue> expression if1
@@ -107,7 +107,7 @@ if: if1 {modify_asm_jmf_at_line($1, get_next_line());}
 
 if1: tIF tOP expression tCP {$1 = asm_add("JMF", index_temp--, -1, -1);} OB instructions CB {$$ = $1;};
 
-while: tWHILE tOP expression tCP OB instructions CB;
+while: tWHILE tOP expression tCP {$1 = asm_add("JMF", index_temp--, -1, -1);} OB instructions CB {int temp = asm_add("JMP", &1, -1, -1) modify_asm_jmf_at_line($1, get_next_line());};
 
 %%
    
