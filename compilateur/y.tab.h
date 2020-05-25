@@ -1,9 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.3.2.  */
+/* A Bison parser, made by GNU Bison 3.0.4.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2019 Free Software Foundation,
-   Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -30,9 +29,6 @@
 
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
-
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
 
 #ifndef YY_YY_Y_TAB_H_INCLUDED
 # define YY_YY_Y_TAB_H_INCLUDED
@@ -66,11 +62,11 @@ extern int yydebug;
     tPRINT = 272,
     tLT = 273,
     tGT = 274,
-    tWHILE = 275,
-    tCOMP = 276,
-    tVAL = 277,
-    tIF = 278,
-    tELSE = 279,
+    tCOMP = 275,
+    tVAL = 276,
+    tIF = 277,
+    tELSE = 278,
+    tWHILE = 279,
     tVAR = 280
   };
 #endif
@@ -92,11 +88,11 @@ extern int yydebug;
 #define tPRINT 272
 #define tLT 273
 #define tGT 274
-#define tWHILE 275
-#define tCOMP 276
-#define tVAL 277
-#define tIF 278
-#define tELSE 279
+#define tCOMP 275
+#define tVAL 276
+#define tIF 277
+#define tELSE 278
+#define tWHILE 279
 #define tVAR 280
 
 /* Value type.  */
@@ -104,12 +100,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 34 "source.y" /* yacc.c:1921  */
+#line 34 "source.y" /* yacc.c:1909  */
 
     int intValue;
     char * stringValue;
 
-#line 113 "y.tab.h" /* yacc.c:1921  */
+#line 109 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
