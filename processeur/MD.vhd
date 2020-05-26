@@ -41,11 +41,10 @@ entity MD is
 end MD;
 
 architecture Behavioral of MD is
-
-	type data_array is array (integer range 31 downto 0) of std_logic_vector (7 downto 0);
+	type data_array is array (integer range 255 downto 0) of std_logic_vector (7 downto 0);
 	signal data: data_array := (others => X"00") ;
-
 begin
+
 process
 begin
 

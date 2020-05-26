@@ -92,22 +92,28 @@ BEGIN
 		wait for CLK_period*10;
 
 		aIP <= X"00";
-		wait for 200 ns;
+		wait for 100 ns;
 		aIP <= X"01";
-		wait for 200 ns;
+		wait for 100 ns;
 		aIP <= X"02";
-		wait for 200 ns;
+		wait for 100 ns;
 		aIP <= X"03";
-		wait for 200 ns;
+		wait for 100 ns;
 		aIP <= X"04";
-		wait for 200 ns;
+		wait for 100 ns;
 		aIP <= X"05";
-		wait for 200 ns;
+		wait for 100 ns;
 		aIP <= X"06";
-		wait for 200 ns;
+		wait for 100 ns;
 		aIP <= X"07";
-		wait for 200 ns;
+		wait for 100 ns;
 		aIP <= X"08";
+		wait for 100 ns;
+		aIP <= X"09";
+		wait for 100 ns;
+		aIP <= X"10";
+		wait for 100 ns;
+		aIP <= X"11";
 
 		wait;
    end process;

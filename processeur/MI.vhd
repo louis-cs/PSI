@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    12:21:54 05/24/2020 
+-- Create Date:    12:21:54 05/18/2020 
 -- Design Name: 
 -- Module Name:    mi - Behavioral 
 -- Project Name: 
@@ -39,7 +39,7 @@ end MI;
 
 architecture Behavioral of mi is
 
-	type instructions is array (integer range 64 downto 0) of std_logic_vector (31 downto 0);
+	type instructions is array (integer range 255 downto 0) of std_logic_vector (31 downto 0);
 	signal instru: instructions := (0 => X"04060700", 1 => X"05060800", 2 => X"06020405", others => X"00000000");
 	
 begin

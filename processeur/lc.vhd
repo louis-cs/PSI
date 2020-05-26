@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    20:55:17 05/24/2020 
+-- Create Date:    20:55:17 05/16/2020 
 -- Design Name: 
 -- Module Name:    lc - Behavioral 
 -- Project Name: 
@@ -41,7 +41,7 @@ W <= 	"0011" when OP = X"01" else	-- ADD
 		"0101" when OP = X"02" else 	-- MUL
 		"0111" when OP = X"03" else 	-- SOU
 		"1001" when OP = X"04" else	-- DIV
-		"0001" when OP = X"06" or OP=X"05" or OP = X"07" else --AFC COP LOAD
+		"0001" when OP = X"06" or OP=X"05" or OP = X"07" or OP = X"00" else --AFC COP LOAD
 		"0000" when OP=X"08"; 			-- STORE
 		
 end Behavioral;

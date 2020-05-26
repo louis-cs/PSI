@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    00:03:08 05/25/2020 
+-- Create Date:    9:03:08 05/16/2020 
 -- Design Name: 
 -- Module Name:    processor - Behavioral 
 -- Project Name: 
@@ -129,8 +129,8 @@ begin
 
 	EX_Mem: pipe port map(A2, OP2, MUX2, C2, A3, OP3, B3, C3, CLK);
 
-	MUX3 <= A3 when OP3=X"08" else -- STORE
-	  B3 when OP3=X"01" or OP3=X"02" or OP3=X"03" or OP3=X"04" or OP3=X"05" or OP3=X"06" or OP3=X"07"; -- ADD MUL SOU DIV COP AFC LOAD
+	MUX3 <= A3 when OP3=X"01" or OP3=X"02" or OP3=X"03" or OP3=X"04" or OP3=X"05" or OP3=X"06" or OP3=X"08" else -- STORE ADD MUL SOU DIV COP AFC
+	  B3 when OP3=X"07"; -- LOAD
 
 	LC2: lc port map(OP3, RW); 
 	MEMDATA : md port map(MUX3, B3, RW(0), RST, CLK, SORTIE2);
